@@ -91,8 +91,8 @@
       <div id="name-display"><div class="test"><div class="name"><span>Your Name</span></div></div></div><br>
       <img src="https://fastly.jsdelivr.net/gh/cdnamd/pic2025/all/ny/en/wish4.png" width="50%" height="5%"style="animation: rubberBand 2.5s infinite">
         <p id="demo" style="margin:5px; color:#DDED2F; font-size:20px; font-weight:bold;"></p>
-        <img src="https://fastly.jsdelivr.net/gh/cdnamd/pic2025/all/ny/en/main7.webp" width="80%" height="30%"style="animation: pulse 2.5s infinite"> <br>
-        <img src="https://fastly.jsdelivr.net/gh/cdnamd/pic2025/all/ny/26g.svg" style="max-width:85%; height:auto;">
+        <img src="https://fastly.jsdelivr.net/gh/cdnamd/pic2025/all/ny/en/12345.png" width="80%" height="30%"style="animation: pulse 2.5s infinite"> <br>
+        <img src="https://fastly.jsdelivr.net/gh/cdnamd/pic2025/all/ny/aaa.png" style="max-width:85%; height:auto;">
         <center>
         <div class="GodMessage" style="text-shadow: 1px 1px 3px yellow, 1px 1px 3px orange, -1px -1px 3px silver, -1px -1px 3px black;">
           <p style="text-shadow: 1px 1px 3px black, 1px 1px 3px black, -1px -1px 3px black, -1px -1px 3px black;color:#ff9933">May this New Year</p>
@@ -126,141 +126,7 @@
         </center>
       </div>
       <script>
-      // URL Parameter and Sanitization Utility Functions
-      function getUrlParameter(name, fallback) {
-        const urlParams = new URLSearchParams(window.location.search);
-        const value = urlParams.get(name);
-        return value && value.trim() !== '' ? value.trim() : fallback;
-      }
-
-      function sanitizeName(input) {
-        if (!input || typeof input !== 'string') return 'Your Name';
-        
-        try {
-          // URLSearchParams.get() already decodes, so we just use the input directly
-          let safeInput = input;
-          
-          // HTML entity decode - decode common HTML entities
-          const textarea = document.createElement('textarea');
-          textarea.innerHTML = safeInput;
-          safeInput = textarea.value;
-          textarea.remove();
-          
-          //  removes: +, -, @, %, <, >, &lt;, &gt;, &#039;, &quot;, &amp;, #
-          const specialChars = ['+', '-', '@', '%', '<', '>', '&lt;', '&gt;', '&#039;', '&quot;', '&amp;', '#'];
-          specialChars.forEach(char => {
-            safeInput = safeInput.replace(new RegExp(char.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), ' ');
-          });
-          
-          // Remove HTML tags by extracting text content
-          const tempDiv = document.createElement('div');
-          tempDiv.textContent = safeInput;
-          safeInput = tempDiv.textContent || tempDiv.innerText || '';
-          tempDiv.remove();
-          
-          let name = safeInput.replace(/\s+/g, ' ').trim();
-          if (!name) return 'Your Name';
-          
-          return name;
-        } catch (e) {
-          return 'Your Name';
-        }
-      }
-
-      function getUrlName(name) {
-        return name.replace(/[+\- ]/g, '-');
-      }
-
-      function wrapEmojis(name) {
-        const emojiPattern = /[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{2300}-\u{23FF}\u{2B50}\u{1F004}-\u{1F0CF}\u{1F200}-\u{1F251}\u{1F1E6}-\u{1F1FF}\u{1F500}-\u{1F51F}\u{200D}\u{20E3}]/gu;
-        return '<span class="emoji-free">' + name.replace(emojiPattern, (match) => 
-          '</span><span class="emoji">' + match + '</span><span class="emoji-free">'
-        ) + '</span>';
-      }
-
-      function wrapCharactersInTags(text) {
-        const pattern = /^[a-zA-Z0-9 ~`!$^*()_\\\-+=\/?.,;:\[\]{}|éèêëàâäîïôöùûüçœæÿÉÈÊËÀÂÄÎÏÔÖÙÛÜÇŒÆáíóúÁÍÓÚñÑ¿¡°ªºçÇàèìòùâêîôûãõ€£¥₩₪¢π∑∞√∫≈<>=≤≥±÷©®™°•§\u{10000}-\u{1FFFF}]+$/u;
-        
-        if (pattern.test(text)) {
-          const wrappedText = Array.from(text).map(char => `<span>${char}</span>`).join('');
-          return '<div class="test"><div class="name">' + wrappedText + '</div></div>';
-        } else {
-          const emojiBgRemove = wrapEmojis(text);
-          return '<div class="sname">' + emojiBgRemove + '</div>';
-        }
-      }
-
-      function isMobileDevice() {
-        return /(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i.test(navigator.userAgent);
-      }
-
-      // Initialize page with URL parameter
-      (function() {
-        const rawName = getUrlParameter('n', 'Your Name');
-        const name = sanitizeName(rawName);
-        const yname = getUrlName(name);
-        const ynamefb = encodeURIComponent(encodeURIComponent(yname));
-        
-        // Update title
-        document.getElementById('page-title').textContent = name + ' wishing you Happy New Year 2026';
-        
-        // Update meta tags
-        const ogTitle = name + ' send you a surprise message. Open this';
-        document.getElementById('og-title').setAttribute('content', ogTitle);
-        document.getElementById('og-site-name').setAttribute('content', ogTitle);
-        document.getElementById('og-url').setAttribute('content', 'https://open-fast.com/hd/?n=' + encodeURIComponent(yname));
-        
-        // Update name display
-        const nameDisplay = document.getElementById('name-display');
-        nameDisplay.innerHTML = wrapCharactersInTags(name);
-        
-        // Update emoji display
-        const emojiDisplay = document.getElementById('emoji-display');
-        emojiDisplay.innerHTML = wrapEmojis(name);
-        
-        // Update sharing links
-        const domain = "https://open-fast.com/wow/?n=";
-        const domainfb = "open-fast.com/wow/?n=";
-        const wpMessage = "🤗😇 Have you seen this??%0A*" + encodeURIComponent(name) + "* sent you a special surprise message %0A💁 Open This 👇👇";
-        const shareUrl = domain + yname;
-        
-        const whatsappLink = document.getElementById('whatsapp-link');
-        const messengerLink = document.getElementById('messenger-link');
-        
-        if (isMobileDevice()) {
-          whatsappLink.href = "whatsapp://send?text=" + wpMessage + " %0A " + shareUrl + " %0A";
-          messengerLink.href = "fb-messenger://share/?link=https%3A%2F%2F" + domainfb + ynamefb + "&t=fm";
-          messengerLink.setAttribute('data-os', 'Messenger');
-        } else {
-          whatsappLink.href = "https://api.whatsapp.com/send?text=" + wpMessage + " %0A " + shareUrl + " %0A";
-          whatsappLink.target = "_blank";
-          messengerLink.href = "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2F" + domainfb + ynamefb + "&t=fb";
-          messengerLink.target = "_blank";
-          messengerLink.setAttribute('data-os', 'Facebook');
-          const messengerImg = messengerLink.querySelector('img');
-          if (messengerImg) {
-            messengerImg.src = "https://fastly.jsdelivr.net/gh/cdnamd/pic2025/all/ny/fb.webp";
-          }
-        }
-      })();
-
-      $(function(){ $(".shareBtn").click(function(){ $(this).hide().siblings(".shareShow").show(); }); $(".shareShow").click(function(){ $(this).hide().siblings(".shareBtn").show(); }); });
-      const container = document.querySelector('.fireworks-container');
-      new Fireworks({
-      target: container, hue: 120, startDelay: 1, minDelay: 10, maxDelay: 10, speed: 1, acceleration: 1.05,
-      friction: 0.98, gravity: 1, particles: 75, trace: 3, explosion: 5,
-      boundaries: { top: 50, bottom: container.clientHeight, left: 50, right: container.clientWidth },
-      sound: { enable: true, list: ['https://fastly.jsdelivr.net/gh/cdnamd/pic2025/all/ny/explosion0.mp3', 'https://fastly.jsdelivr.net/gh/cdnamd/pic2025/all/ny/explosion1.mp3', 'https://fastly.jsdelivr.net/gh/cdnamd/pic2025/all/ny/explosion2.mp3'], min: 4, max: 8 }
-      }).start();
-      var countDownDate = new Date("Jan 01, 2026 00:00:00").getTime();
-      var x = setInterval(function() {
-      var distance = countDownDate - new Date().getTime();
-      if (distance < 0) { clearInterval(x); document.getElementById("demo").innerHTML = ""; }
-      else {
-      var d = Math.floor(distance / (1000 * 60 * 60 * 24)), h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)), m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)), s = Math.floor((distance % (1000 * 60)) / 1000);
-      document.getElementById("demo").innerHTML = `${d}<font color='#FA069A'> Days,</font> ${h}<font color='#11680B'> hrs,</font> ${m}<font color='#9B274C'> min,<br></font> ${s}<font color='#F47810'> sec before</font> `;
-      }
-      }, 1000);
+      function getUrlParameter(name,fallback){const urlParams=new URLSearchParams(window.location.search);const value=urlParams.get(name);return value&&value.trim()!==""?value.trim():fallback}function sanitizeName(input){if(!input||typeof input!=="string")return"Your Name";try{let safeInput=input;const textarea=document.createElement("textarea");textarea.innerHTML=safeInput;safeInput=textarea.value;textarea.remove();const specialChars=["+","-","@","%","<",">","&lt;","&gt;","&#039;","&quot;","&amp;","#"];specialChars.forEach(char=>{safeInput=safeInput.replace(new RegExp(char.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"),"g")," ")});const tempDiv=document.createElement("div");tempDiv.textContent=safeInput;safeInput=tempDiv.textContent||tempDiv.innerText||"";tempDiv.remove();let name=safeInput.replace(/\s+/g," ").trim();if(!name)return"Your Name";return name}catch(e){return"Your Name"}}function getUrlName(name){return name.replace(/[+\- ]/g,"-")}function wrapEmojis(name){const emojiPattern=/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{2300}-\u{23FF}\u{2B50}\u{1F004}-\u{1F0CF}\u{1F200}-\u{1F251}\u{1F1E6}-\u{1F1FF}\u{1F500}-\u{1F51F}\u{200D}\u{20E3}]/gu;return'<span class="emoji-free">'+name.replace(emojiPattern,match=>'</span><span class="emoji">'+match+'</span><span class="emoji-free">')+"</span>"}function wrapCharactersInTags(text){const pattern=/^[a-zA-Z0-9 ~`!$^*()_\\\-+=\/?.,;:\[\]{}|éèêëàâäîïôöùûüçœæÿÉÈÊËÀÂÄÎÏÔÖÙÛÜÇŒÆáíóúÁÍÓÚñÑ¿¡°ªºçÇàèìòùâêîôûãõ€£¥₩₪¢π∑∞√∫≈<>=≤≥±÷©®™°•§\u{10000}-\u{1FFFF}]+$/u;if(pattern.test(text)){const wrappedText=Array.from(text).map(char=>`<span>${char}</span>`).join("");return'<div class="test"><div class="name">'+wrappedText+"</div></div>"}else{const emojiBgRemove=wrapEmojis(text);return'<div class="sname">'+emojiBgRemove+"</div>"}}function isMobileDevice(){return/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i.test(navigator.userAgent)}(function(){const rawName=getUrlParameter("n","Your Name");const name=sanitizeName(rawName);const yname=getUrlName(name);const ynamefb=encodeURIComponent(encodeURIComponent(yname));document.getElementById("page-title").textContent=name+" wishing you Happy New Year 2026";const ogTitle=name+" send you a surprise message. Open this";document.getElementById("og-title").setAttribute("content",ogTitle);document.getElementById("og-site-name").setAttribute("content",ogTitle);document.getElementById("og-url").setAttribute("content","https://open-fast.com/hd/?n="+encodeURIComponent(yname));const nameDisplay=document.getElementById("name-display");nameDisplay.innerHTML=wrapCharactersInTags(name);const emojiDisplay=document.getElementById("emoji-display");emojiDisplay.innerHTML=wrapEmojis(name);const domain="https://open-fast.com/wow/?n=";const domainfb="open-fast.com/wow/?n=";const wpMessage="🤗😇 Have you seen this??%0A*"+encodeURIComponent(name)+"* sent you a special surprise message %0A💁 Open This 👇👇";const shareUrl=domain+yname;const whatsappLink=document.getElementById("whatsapp-link");const messengerLink=document.getElementById("messenger-link");if(isMobileDevice()){whatsappLink.href="whatsapp://send?text="+wpMessage+" %0A "+shareUrl+" %0A";messengerLink.href="fb-messenger://share/?link=https%3A%2F%2F"+domainfb+ynamefb+"&t=fm";messengerLink.setAttribute("data-os","Messenger")}else{whatsappLink.href="https://api.whatsapp.com/send?text="+wpMessage+" %0A "+shareUrl+" %0A";whatsappLink.target="_blank";messengerLink.href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2F"+domainfb+ynamefb+"&t=fb";messengerLink.target="_blank";messengerLink.setAttribute("data-os","Facebook");const messengerImg=messengerLink.querySelector("img");if(messengerImg){messengerImg.src="https://fastly.jsdelivr.net/gh/cdnamd/pic2025/all/ny/fb.webp"}}})();$(function(){$(".shareBtn").click(function(){$(this).hide().siblings(".shareShow").show()});$(".shareShow").click(function(){$(this).hide().siblings(".shareBtn").show()})});const container=document.querySelector(".fireworks-container");new Fireworks({target:container,hue:120,startDelay:1,minDelay:10,maxDelay:10,speed:1,acceleration:1.05,friction:.98,gravity:1,particles:75,trace:3,explosion:5,boundaries:{top:50,bottom:container.clientHeight,left:50,right:container.clientWidth},sound:{enable:true,list:["https://fastly.jsdelivr.net/gh/cdnamd/pic2025/all/ny/explosion0.mp3","https://fastly.jsdelivr.net/gh/cdnamd/pic2025/all/ny/explosion1.mp3","https://fastly.jsdelivr.net/gh/cdnamd/pic2025/all/ny/explosion2.mp3"],min:4,max:8}}).start();var countDownDate=new Date("Jan 01, 2026 00:00:00").getTime();var x=setInterval(function(){var distance=countDownDate-(new Date).getTime();if(distance<0){clearInterval(x);document.getElementById("demo").innerHTML=""}else{var d=Math.floor(distance/(1e3*60*60*24)),h=Math.floor(distance%(1e3*60*60*24)/(1e3*60*60)),m=Math.floor(distance%(1e3*60*60)/(1e3*60)),s=Math.floor(distance%(1e3*60)/1e3);document.getElementById("demo").innerHTML=`${d}<font color='#FA069A'> Days,</font> ${h}<font color='#11680B'> hrs,</font> ${m}<font color='#9B274C'> min,<br></font> ${s}<font color='#F47810'> sec before</font> `}},1e3);
       </script>
        <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-JQWYD3GEEH"></script>
